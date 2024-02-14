@@ -1,0 +1,55 @@
+---
+name: 8 - Maintenance Mode
+
+on:
+  workflow_dispatch:
+    inputs:
+      environ:
+        description: 'Environment:'
+        required: true
+        type: choice
+        options:
+          - development
+          - staging
+          - prod
+      app:
+        description: 'Catalog App:'
+        required: true
+        type: choice
+        options:
+          - both catalog-web and catalog-admin
+          - catalog-web only
+          - catalog-admin only
+      mode:
+        description: 'Operation Mode:'
+        required: true
+        type: choice
+        options:
+          - 1 - Normal
+          - 2 - Scheduled Maintenance - 15 mins duration expected
+          - 3 - Unscheduled Downtime - unknown duration
+      notification:
+        description: 'Notification to Slack?'
+        required: true
+        type: boolean
+        default: true
+        
+jobs:
+  set-maintenance-mode:
+    name: Set ${{inputs.environ}}:${{inputs.app}} to ${{inputs.mode}}
+    runs-on: ubuntu-latest
+    environment: ${{inputs.environ}}
+    steps:
+      - name: run task
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: >
+            cf a
+          cf_org: gsa-datagov
+          cf_space: ${{ inputs.environ }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+      - name: send notification to slack
+        if: ${{ inputs.notification }}
+        run: echo "Slack notification sent!"          
+
