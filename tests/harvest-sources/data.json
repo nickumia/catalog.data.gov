@@ -7,7 +7,7 @@
         {
             "@type": "dcat:Dataset",
             "title": "2015 GSA Common Baseline Implementation Plan and CIO Assignment Plan",
-            "description": "new testing: This is GSA's 2015 Common Baseline Implementation Plan and its CIO Assignment Plan per the requirements set forth in FITARA legislation.",
+            "description": "This is GSA's 2015 Common Baseline Implementation Plan and its CIO Assignment Plan per the requirements set forth in FITARA legislation.",
             "modified": "2017-05-15",
             "accessLevel": "public",
             "identifier": "GSA-2016-01-22-01",
